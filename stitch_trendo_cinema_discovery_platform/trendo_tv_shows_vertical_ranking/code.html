@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>trendo. — TV Shows Live Telemetry Ranking</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "outline-variant": "#444748",
+            "surface-container-high": "#2a2a2a",
+            "on-secondary-fixed": "#1a1c1c",
+            "surface-container-low": "#1c1b1b",
+            "secondary-fixed-dim": "#c7c6c6",
+            "secondary": "#c7c6c6",
+            "inverse-surface": "#e5e2e1",
+            "on-error": "#690005",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed": "#1a1c1c",
+            "primary-container": "#e2e2e2",
+            "background": "#131313",
+            "error-container": "#93000a",
+            "surface-container-highest": "#353534",
+            "primary": "#ffffff",
+            "surface-tint": "#c6c6c7",
+            "on-tertiary-container": "#646464",
+            "on-secondary-container": "#b8b8b8",
+            "primary-fixed": "#e2e2e2",
+            "on-tertiary-fixed-variant": "#464747",
+            "tertiary-container": "#e4e2e2",
+            "on-primary-container": "#636565",
+            "tertiary-fixed": "#e4e2e2",
+            "surface": "#131313",
+            "surface-dim": "#131313",
+            "surface-bright": "#3a3939",
+            "on-tertiary": "#303031",
+            "tertiary-fixed-dim": "#c7c6c6",
+            "primary-fixed-dim": "#c6c6c7",
+            "on-tertiary-fixed": "#1b1c1c",
+            "inverse-primary": "#5d5f5f",
+            "on-secondary-fixed-variant": "#464747",
+            "surface-container-lowest": "#0e0e0e",
+            "on-secondary": "#2f3131",
+            "error": "#ffb4ab",
+            "on-background": "#e5e2e1",
+            "surface-container": "#201f1f",
+            "on-primary-fixed-variant": "#454747",
+            "outline": "#8e9192",
+            "on-surface-variant": "#c4c7c8",
+            "secondary-container": "#484949",
+            "inverse-on-surface": "#313030",
+            "surface-variant": "#353534",
+            "on-surface": "#e5e2e1",
+            "secondary-fixed": "#e3e2e2",
+            "tertiary": "#ffffff",
+            "on-primary": "#2f3131"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-2xl": "4rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "gutter-mobile": "0.75rem",
+            "space-md": "1rem",
+            "margin-mobile": "1.25rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          fontFamily: {
+            "display-hero-mobile": ["Hanken Grotesk"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "display-hero": ["Hanken Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "headline-lg": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Hanken Grotesk"],
+            "label-mono-md": ["Space Mono"],
+            "headline-md": ["Hanken Grotesk"],
+            "label-mono-sm": ["Space Mono"],
+            "syne": ["Syne", "sans-serif"]
+          },
+          fontSize: {
+            "display-hero-mobile": ["36px", { lineHeight: "42px", letterSpacing: "-0.025em", fontWeight: "600" }],
+            "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-sm": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "500" }],
+            "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.005em", fontWeight: "400" }],
+            "display-hero": ["64px", { lineHeight: "72px", letterSpacing: "-0.03em", fontWeight: "600" }],
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }],
+            "headline-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "500" }],
+            "headline-lg-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.015em", fontWeight: "500" }],
+            "label-mono-md": ["12px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "400" }],
+            "headline-md": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "500" }],
+            "label-mono-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.08em", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #070707;
+      color: #e5e2e1;
+      font-family: 'Hanken Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Ambient living gradient mesh backdrop */
+    .ambient-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 50% 12%, rgba(45, 45, 52, 0.45) 0%, transparent 60%),
+        radial-gradient(circle at 85% 45%, rgba(26, 26, 32, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 15% 75%, rgba(20, 20, 26, 0.4) 0%, transparent 55%);
+      filter: blur(80px);
+    }
+
+    /* Subtle scanline archive effect */
+    .archival-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Dock Card Proximity transition physics */
+    .dock-card {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070707;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444748;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen relative selection:bg-primary selection:text-background">
+<div class="ambient-mesh"></div>
+<div class="archival-grain"></div>
+<!-- SHARED TOP APP BAR -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md text-primary dark:text-primary docked full-width top-0 sticky z-50 border-b border-outline-variant/20 dark:border-outline-variant/20 transition-all duration-200">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin h-16 max-w-7xl mx-auto">
+<!-- Brand Logo & Quick Search Slate -->
+<div class="flex items-center gap-6">
+<a class="text-headline-sm font-headline-sm lowercase tracking-tight text-primary dark:text-primary font-syne font-bold flex items-center gap-1" href="#">
+          trendo.
+        </a>
+<!-- On-left search pill container -->
+<div class="hidden sm:flex items-center bg-[#0d0d0d] border border-outline-variant/30 rounded-full px-3 py-1.5 gap-2 text-on-surface-variant focus-within:border-primary transition-colors duration-200 shadow-inner">
+<span class="material-symbols-outlined text-outline text-[18px]">search</span>
+<input class="bg-transparent border-0 p-0 text-body-sm font-body-sm text-primary placeholder-[#707070] focus:ring-0 w-44 md:w-56" placeholder="Search telemetry, actors, showrunners..." type="text"/>
+<kbd class="text-label-mono-sm font-label-mono-sm bg-surface-container-high px-1.5 py-0.5 rounded text-outline-variant border border-outline-variant/20">⌘K</kbd>
+</div>
+</div>
+<!-- Navigation Links: Destination Lock: "TV Shows" Active -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-body-md font-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Discover</a>
+<a class="text-body-md font-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Movies</a>
+<a class="text-body-md font-body-md text-primary dark:text-primary font-medium border-b border-primary dark:border-primary pb-1" href="#">TV Shows</a>
+<a class="text-body-md font-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Curations</a>
+</nav>
+<!-- Trailing Action Icons -->
+<div class="flex items-center gap-3">
+<button class="p-2 rounded hover:text-primary dark:hover:text-primary hover:bg-surface-container-high/40 dark:hover:bg-surface-container-high/40 transition-colors duration-200 text-on-surface-variant" title="Tune Stream Filters">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<button class="p-2 rounded hover:text-primary dark:hover:text-primary hover:bg-surface-container-high/40 dark:hover:bg-surface-container-high/40 transition-colors duration-200 text-on-surface-variant" title="Archived Watchlist">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+<button class="p-2 rounded hover:text-primary dark:hover:text-primary hover:bg-surface-container-high/40 dark:hover:bg-surface-container-high/40 transition-colors duration-200 text-on-surface-variant" title="Curator Identity">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="relative z-10 max-w-7xl mx-auto px-margin-mobile md:px-margin pt-10 pb-20">
+<!-- HEADER CONTROLS & SEGMENTED SWITCH -->
+<section class="flex flex-col items-center justify-center text-center space-y-6 pt-4 pb-10">
+<!-- Primary Brand Anchor / Wordmark in Syne Styling -->
+<div class="flex flex-col items-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 text-label-mono-sm font-label-mono-sm text-on-surface-variant tracking-wider uppercase mb-4">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+          GLOBAL TELEMETRY STREAM • LIVE TV INDEX
+        </div>
+<h1 class="font-syne font-extrabold text-display-hero-mobile md:text-display-hero text-primary tracking-tighter lowercase leading-none">
+          trendo.
+        </h1>
+</div>
+<!-- Segmented Control Toggle Switch: Movies vs TV Shows -->
+<div class="inline-flex items-center bg-[#101012] p-1.5 rounded-full border border-outline-variant/30 backdrop-blur-xl shadow-2xl">
+<button class="px-6 py-2 rounded-full text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-all duration-200" type="button">
+          Movies
+        </button>
+<button class="px-6 py-2 rounded-full text-body-sm font-body-sm bg-primary text-background font-medium shadow-md transition-all duration-200" type="button">
+          TV Shows
+        </button>
+</div>
+<!-- Quick Filter Pills -->
+<div class="flex flex-wrap items-center justify-center gap-2 pt-1 max-w-2xl">
+<button class="px-3.5 py-1.5 rounded-full bg-primary text-background text-label-mono-sm font-label-mono-sm font-medium transition-all">
+          Today's Top 50
+        </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#0d0d0d] border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-outline text-label-mono-sm font-label-mono-sm transition-all">
+          Series Premiere Surge
+        </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#0d0d0d] border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-outline text-label-mono-sm font-label-mono-sm transition-all">
+          Emmy Circuit
+        </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#0d0d0d] border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-outline text-label-mono-sm font-label-mono-sm transition-all">
+          Critics Consensus
+        </button>
+</div>
+</section>
+<!-- EDITORIAL SUBHEADER & TELEMETRY BAR -->
+<div class="border-t border-b border-outline-variant/20 py-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="max-w-2xl">
+<span class="text-label-mono-sm font-label-mono-sm text-outline tracking-wider uppercase block mb-1">Curation Dispatch 084 // Series Frequency</span>
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary tracking-tight font-medium">
+          Prestige TV, in motion.
+        </h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2 leading-relaxed">
+          Explore what the world is bingeing and tracking today. Curated daily from global TMDB telemetry, broadcast ratings, and seasonal tracking signals.
+        </p>
+</div>
+<div class="flex items-center gap-4 text-label-mono-sm font-label-mono-sm text-outline-variant self-stretch md:self-auto justify-between md:justify-end border-t md:border-t-0 border-outline-variant/10 pt-4 md:pt-0">
+<span class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">sensors</span>
+          STREAM DOCK: 10 OF 50 TITLES
+        </span>
+<div class="flex items-center gap-1 bg-[#141414] p-1 rounded border border-outline-variant/20">
+<button class="p-1 rounded bg-surface-container-high text-primary" title="Vertical Dock View">
+<span class="material-symbols-outlined text-[16px]">view_agenda</span>
+</button>
+<button class="p-1 rounded text-outline-variant hover:text-on-surface" title="Compact Grid View">
+<span class="material-symbols-outlined text-[16px]">grid_view</span>
+</button>
+</div>
+</div>
+</div>
+<!-- DOCK RANKING CONTAINER (Physics Target) -->
+<div class="flex flex-col gap-4 relative py-4" id="dock-stream">
+<!-- ITEM 01: Shōgun -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-amber-400/50 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="1" onclick="openModal('shogun')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<!-- Left Wing: Rank Pill & Poster Thumbnail -->
+<div class="flex items-center gap-4 w-full md:w-auto">
+<!-- Metallic Aura Gold Rank Badge -->
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-gradient-to-br from-amber-200 via-amber-400 to-amber-700 p-[1px] shadow-[0_0_20px_rgba(251,191,36,0.25)]">
+<div class="w-full h-full bg-[#0a0a0b] rounded-full flex flex-col items-center justify-center">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-300 font-bold leading-none">#01</span>
+<span class="text-[8px] font-label-mono-sm text-amber-400/80 uppercase">AURA</span>
+</div>
+</div>
+<!-- Poster Artwork Container (2:3 aspect preview) -->
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic still from Shōgun 2024 showing Lord Toranaga in ornate dark feudal Japanese armor with sweeping coastal dawn lighting, moody mist, and rich obsidian gold color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH-Le2xFauVEiPGWUP_zHQGCHSf7kv641rdM4QI5va6uvCVXrFON4i5SditmZRSn5auc83-RyeQoH9T2Ga00UolonQBopstc64fLkUvYFSL5hc7lA1lh-pSLHQmst8N7k_e9ynJHIeD4RbQ3mesq1k1HxRAMu5ZmsOMSfYXKluZJzOz4N9v9JeI2vFEN4_4jU_O8J5m9u7lKpzvLx5AQKa_SsKJepGK7u-NsMZP-Ep"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">FX</span>
+</div>
+<!-- Title & Quick Metadata (Mobile Stack) -->
+<div class="flex-1 md:hidden">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-300 bg-amber-950/40 border border-amber-600/30 px-1.5 py-0.5 rounded">EMMY RECORD BREAKER</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold">Shōgun</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2024 • Drama / War • FX / Hulu</p>
+</div>
+</div>
+<!-- Center Wing: Narrative & Telemetry (Desktop Expanded) -->
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-300 bg-amber-950/30 border border-amber-600/40 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">military_tech</span>
+                EMMY RECORD BREAKER
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2024 • Drama / War • FX / Hulu</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight group-hover:text-amber-100 transition-colors">
+              Shōgun
+            </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              Lord Yoshii Toranaga navigates lethal political machinations in feudal Japan as an English navigator arrives shipwrecked, carrying secrets that upset the balance of power.
+            </p>
+</div>
+<!-- Right Wing: Telemetry Signals & Callout -->
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.7</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 984.2</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- ITEM 02: The Bear -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-slate-300/50 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="2" onclick="openModal('thebear')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-gradient-to-br from-slate-200 via-slate-400 to-slate-600 p-[1px] shadow-[0_0_15px_rgba(203,213,225,0.2)]">
+<div class="w-full h-full bg-[#0a0a0b] rounded-full flex flex-col items-center justify-center">
+<span class="text-label-mono-sm font-label-mono-sm text-slate-200 font-bold leading-none">#02</span>
+<span class="text-[8px] font-label-mono-sm text-slate-400 uppercase">MEDAL</span>
+</div>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High intensity kitchen still from The Bear series, showing Carmy in an apron amidst stainless steel culinary kitchen flare, high contrast warm lighting, steam and intense cinematic realism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqWulZouuQv0suPQ5ByzF8mrC-7-75NALOCmT-qxtTtbyc5zo6T1xSJultIDgwGFYAzvJ3nFP5s3Vfsq535P0F9G601B5sbM399Q4PWwvVtwlgTufqVTrBmldEbdk-AHY1B5Hdhs1jy7DKaFj649S95xOfkrWOtEfknLrj-dFHY1mATOj1h3ZEEXoLV_l6ew58yBm_G1YYJalnaDWyHFHGoWFCJSF-t_psirFTWHoE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">FX</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-slate-300 bg-slate-900/60 border border-slate-700 px-1.5 py-0.5 rounded">GOLDEN GLOBE DOMINANCE</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">The Bear</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2023–2024 • Comedy / Drama</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-slate-200 bg-slate-900/70 border border-slate-700/60 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">award_star</span>
+                GOLDEN GLOBE DOMINANCE
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2023–2024 • Comedy / Drama • FX / Hulu</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">The Bear</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              Carmen "Carmy" Berzatto fights to transform his family sandwich shop into an elite fine-dining culinary destination amidst crushing grief, kitchen panic, and generational trauma.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.6</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 895.1</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 03: Severance -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-amber-700/50 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="3" onclick="openModal('severance')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-gradient-to-br from-amber-600 via-amber-800 to-amber-950 p-[1px] shadow-[0_0_15px_rgba(180,83,9,0.2)]">
+<div class="w-full h-full bg-[#0a0a0b] rounded-full flex flex-col items-center justify-center">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-500 font-bold leading-none">#03</span>
+<span class="text-[8px] font-label-mono-sm text-amber-600 uppercase">PODIUM</span>
+</div>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Eerie symmetrical corporate fluorescent hallway from Severance featuring cold sterile cyan tint, pristine white floors, clinical corporate aesthetic with subtle geometric distortion." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6wx1RvOBX23h0qTFH-hVcdO-vzGoIhGXlfc0IffveQdHCjY4sOPJeokPan2yfsCMMXEdYgXQ4L69n9f8q0Ot-BXzGrTX4eHLqIFISNrWt65XFE2-Mi4s4isL-FVroJz6JS7YypIDyyssBrsGrIbi905PqeX6TEyANWpJboevalMET5lI2wdwSAEaOmEhT3bNRqxe9UBbP9IrUSoNu67ij8VqMSUqQeHaMjl2nTkJS"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">APPLE</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-400 bg-amber-950/40 border border-amber-800/40 px-1.5 py-0.5 rounded">PEABODY CRITICS CHOICE</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">Severance</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2022–2025 • Sci-Fi / Mystery</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-400 bg-amber-950/40 border border-amber-700/50 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                PEABODY CRITICS CHOICE
+              </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2022–2025 • Sci-Fi / Mystery • Apple TV+</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">Severance</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              Mark leads a team of office workers whose memories have been surgically divided between work and personal lives, uncovering an existential corporate conspiracy at Lumon Industries.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.7</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 812.4</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 04: Succession -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="4" onclick="openModal('succession')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#04</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Dramatic high angle penthouse boardroom portrait from Succession featuring dark executive suits, New York skyline glass reflection, cold architectural lighting and opulent quiet luxury tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx8jBXyfDdSWpp0CShSR53fXr2YvaEw8UR51G2MqV_kazIT7J7_eW6SBuTCbseaXCHwD4mxfLmbYwE_YJXFZDdGrWnxPbI8prjltNLXDtjVFqs_DRai-ih6YRegqoji_TAC_B6E1rMlOOwGQbPJjz3ekQcN-6CQ7GNmqJoe_tMqSXMvnrGhmcT_Cx6MlXtH69WtMVpQBvspinnDBK420PxEsCZloQrSskba7rk7MsP"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">HBO</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">EMMY OUTSTANDING DRAMA</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">Succession</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2023 • Drama • Max</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">EMMY OUTSTANDING DRAMA</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2023 • Drama • HBO / Max</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">Succession</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              The Roy family contemplates their global media empire and legacy as their aging patriarch prepares to name his successor, triggering bitter fraternal betrayals.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.9</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 760.3</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 05: House of the Dragon -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="5" onclick="openModal('hotd')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#05</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Dark fantasy throne hall from House of the Dragon with towering black stone, warm amber dragonfire glow in the background, platinum haired monarch and majestic gothic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACgTfW559cz4XxoUjVc7HLZEDw5311obepJ3vuCfIMtzNPLDgWsB61STPJllTH22yg9cqocvtBYv1xN3zIpYVTX9ikwq9bUmk_hdHezFzs3tNJyFVsDL9zccvoEatPKpSbLwQ0XLANVcRcefsHYwtrasCoUDlNxaiNR2BAGdz7d8lVWgK1EMy_N41Z2jWszJaQWdtYiul9yQcb2AdFP2GmGV3ZG7XSUf34bTrk97gU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">HBO</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">GLOBAL STREAMING LEADER</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">House of the Dragon</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2024 • Fantasy / Action</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">GLOBAL HBO STREAMING LEADER</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2024 • Fantasy / Action • HBO</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">House of the Dragon</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              The dance of dragons ignites as internal conflicts tear House Targaryen apart following King Viserys' death, pitting queen against prince in total war.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.4</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 720.8</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 06: True Detective: Night Country -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="6" onclick="openModal('truedetective')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#06</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Chilling polar winter night scene from True Detective Night Country with deep blue arctic ice tundra, snow blizzard, heavy parka coats and flashlight beams slicing through blackness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuTzJ5VbSxt8ivZhueg5J0IujpaykvByYFNSB0R4z8KZKQYiiM8xolkfWLZakh-DnrCM1kUWRdXyEBGqMAD0ziB5GO73kSo4e33g48mIS_acbPXgVu9omNnbddn0mhVv9cf6MO0PagUSsDBpKkmlrGhH37Txd_rS9lFMwFiHIfdjlWJI0zIhY3bVAN4s3ooUEPRjmkrv6liPpyTQkubBMyQTE3I4sx3GNBVF-P9AcW"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">HBO</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">ARCTIC NOIR SPOTLIGHT</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">True Detective: Night Country</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2024 • Crime / Mystery</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">ARCTIC NOIR SPOTLIGHT</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2024 • Crime / Mystery • HBO</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">True Detective: Night Country</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              Detectives Liz Danvers and Evangeline Navarro confront deep darkness and indigenous mysticism in Ennis, Alaska following the disappearance of eight research scientists.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">7.5</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 640.2</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 07: Fargo -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="7" onclick="openModal('fargo')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#07</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Midwestern gothic winter landscape from Fargo Season 5 with snowy roadside diner neon sign glowing against deep evening shadows and intense character framing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpw7NNqYJQHdkcVSUlEdG15ghm_j5QnQrqmST6i4jz2SI5Y1WblTXyybOLhSSMSAOLitksm0Th0aC1VqU_UjXIBk73ZCgYoNmiiBnZwLf72y_ztNS-gzH2NMJQnRPKlD-k-_GXjEXtPWL48-IYJU2QMNl36EHqZGamnnxEXYawlJlnX739dyzmTLhxVODvawOnpV9nkjI2p85wJoCxM0iUKihOkHtC06JUfbowB3Je"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">FX</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">CRITICS AURA</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">Fargo</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">Season 5 • 2023–2024</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">CRITICS AURA</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• Season 5 • 2023–2024 • Crime / Drama • FX</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">Fargo</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              An unexpected series of events lands seemingly ordinary Midwestern homemaker Dorothy Lyon in hot water with the authorities, triggering an explosive collision with her dark past.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.2</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 580.1</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 08: The Last of Us -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="8" onclick="openModal('tlou')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#08</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Post-apocalyptic overgrown city ruins from The Last of Us with nature reclaiming crumbling concrete skyscrapers, muted green moss and golden hour dusk cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn-AMfvD2ZiK2vbvRNPcWzr3B7_h1-pYNGWx99iAPCkF8VaZJDgevu1_np7Cnd7Y_tV1y1oXfC-GqKxBlC8qR030KI2NDqxLDpaFLK8J66EsFd0x8ssl3D50zLco2jVPyl0twtnoERoYiduHAmQDVdaiyq1l_somhzGCQzTsKFThrJQt7jlHr5bHAqceeJ9s_0qHM0sQCaqvNXuiKNTcOeAJX0STdBCqFmDLeNMoaZ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">HBO</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">BAFTA RECOGNITION</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">The Last of Us</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2023 • Drama / Sci-Fi</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">BAFTA RECOGNITION</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2023 • Drama / Sci-Fi • HBO</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">The Last of Us</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              After a global pandemic destroys civilization, a hardened survivor takes charge of a 14-year-old girl who may be humanity's last hope across a desolate American landscape.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.8</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 540.9</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 09: Fallout -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="9" onclick="openModal('fallout')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#09</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Retro-futuristic nuclear wasteland desert vista from Fallout with rusty steel power armor silhouette, sun-bleached desert dunes, and cobalt blue sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARg_QNo32W6mBwI9apWZuGSpK0o3oWIisEOJDz3Bb1vsw4CYBzVtW2IDhJw52yO_tOQZSE5SGaWyzbhcs92Ct-4VQ-FG-eWdHqLapb9kOg3BUQRt0nDvlMN-8oO7oIETaFvXB8PKHJAIy_USWeT8asR45lX3H8WUd3wvXfPKaw2y5j_XDDmCXewxvI8i6nQgd_pKYj_jXG-HzQPMckRzUso3RmFe6xRNSC__B8txh9"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">PRIME</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">APOCALYPTIC SENSATION</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">Fallout</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2024 • Sci-Fi / Adventure</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">APOCALYPTIC SENSATION</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2024 • Sci-Fi / Adventure • Prime Video</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">Fallout</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              A peaceful resident of a luxury fallout shelter must venture into the irradiated wasteland 200 years after the bombs fell to rescue her kidnapped father.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.5</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 510.6</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 10: Ripley -->
+<article class="dock-card group relative bg-[#151517] border border-white/10 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-white/30 hover:bg-[#1a1a1d] cursor-pointer" data-card-id="10" onclick="openModal('ripley')">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="w-12 h-12 flex-shrink-0 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center">
+<span class="text-headline-sm font-label-mono-sm text-on-surface font-semibold">#10</span>
+</div>
+<div class="relative w-20 md:w-24 h-28 md:h-32 flex-shrink-0 rounded overflow-hidden border border-white/10 shadow-lg bg-surface-container-lowest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Archival stark monochrome black and white Italian noir frame from Ripley showing dramatic high-contrast chiaroscuro shadows on cobblestone steps in Rome." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi5NvP-S1IDyvBISR0CdF0lSrg_8zQRQ6dru8wDmy7yMCkMxrI1frvm2lTwv-iFj_53bPe4kc1S_WsI9_9flXL2XsMPcYKZ9r8y5RDEPf4ma4vfvw4MCHu_h1O3YEnczP-kZCFHs-AIrk8ojv5nC97xj3iYU7DIEDOkdwEPBXrwC3nAuZ20s55Fgw7pNuSSYUNIk9hv6SqNlqoAHG-6Ca-fIKwWPUZgpHa4FWziDPP"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+<span class="absolute bottom-1 left-1.5 text-[9px] font-label-mono-sm text-white/90 uppercase tracking-widest bg-black/60 px-1 rounded backdrop-blur-xs">NETFLIX</span>
+</div>
+<div class="flex-1 md:hidden">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-1.5 py-0.5 rounded">VENICE CINEMATOGRAPHY PICK</span>
+<h3 class="text-headline-sm font-headline-sm text-primary font-bold mt-1">Ripley</h3>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">2024 • Thriller / Crime</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col flex-1 px-4 max-w-2xl">
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant bg-surface-container border border-outline-variant/30 px-2 py-0.5 rounded">VENICE CINEMATOGRAPHY PICK</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">• 2024 • Thriller / Crime • Netflix</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary font-medium tracking-tight">Ripley</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2 leading-relaxed">
+              A grifter in 1960s New York is hired to travel to Italy to convince a wealthy man's vagabond son to return home, spiraling into deceit, fraud and cold-blooded murder.
+            </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+<div class="flex md:flex-col items-baseline md:items-end gap-3 md:gap-0">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">8.1</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">/10</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant">POP 470.3</span>
+</div>
+<button class="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-bright text-label-mono-sm font-label-mono-sm flex items-center gap-1.5 transition-colors">
+<span>Monograph</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- LOAD REMAINING STREAM CADENCE -->
+<div class="flex flex-col items-center justify-center pt-10 pb-6">
+<button class="px-8 py-3.5 rounded bg-[#161618] hover:bg-[#202023] border border-outline-variant/40 hover:border-primary text-primary text-body-sm font-body-sm font-medium tracking-wide flex items-center gap-2.5 transition-all duration-200 shadow-xl group">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary">expand_more</span>
+<span>Load Remaining #11 – #50 Broadcast Signals</span>
+</button>
+<span class="text-label-mono-sm font-label-mono-sm text-outline-variant mt-3">
+        Refreshed 14 minutes ago via TMDB v3 Enterprise API • Metacritic Seasonal Signal
+      </span>
+</div>
+</main>
+<!-- INTERACTIVE MONOGRAPH DETAIL MODAL -->
+<div class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4" id="monograph-modal">
+<div class="bg-[#141416] border border-white/15 rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-2xl transform scale-95 transition-transform duration-300 relative" id="modal-card">
+<button class="absolute top-5 right-5 text-outline-variant hover:text-primary transition-colors" onclick="closeModal()">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-label-mono-sm font-label-mono-sm text-amber-300 bg-amber-950/40 border border-amber-600/30 px-2 py-0.5 rounded">ARCHIVAL MONOGRAPH</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline" id="modal-rank">TELEMETRY #01</span>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight font-medium mb-1" id="modal-title">
+        Shōgun
+      </h2>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant mb-4" id="modal-meta">
+        2024 • 10 Episodes • FX Productions • Creators: Rachel Kondo, Justin Marks
+      </p>
+<div class="border-t border-b border-white/10 py-4 my-4">
+<p class="text-body-md font-body-md text-on-surface leading-relaxed" id="modal-desc">
+          Detailed overview will populate dynamically upon cursor selection.
+        </p>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-2">
+<div class="bg-[#0b0b0c] p-3 rounded border border-white/5">
+<span class="text-label-mono-sm font-label-mono-sm text-outline block">METACRITIC</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold" id="modal-score">85</span>
+</div>
+<div class="bg-[#0b0b0c] p-3 rounded border border-white/5">
+<span class="text-label-mono-sm font-label-mono-sm text-outline block">TELEMETRY SCORE</span>
+<span class="text-headline-sm font-headline-sm text-emerald-400 font-bold" id="modal-pop">984.2</span>
+</div>
+<div class="bg-[#0b0b0c] p-3 rounded border border-white/5">
+<span class="text-label-mono-sm font-label-mono-sm text-outline block">STREAM STATUS</span>
+<span class="text-headline-sm font-headline-sm text-primary font-bold">ACTIVE</span>
+</div>
+</div>
+<div class="mt-6 flex justify-end gap-3">
+<button class="px-4 py-2 rounded bg-surface-container-high text-body-sm font-body-sm text-on-surface hover:text-primary" onclick="closeModal()">
+          Dismiss
+        </button>
+<button class="px-5 py-2 rounded bg-primary text-background text-body-sm font-body-sm font-medium hover:bg-neutral-200">
+          Save to Curated Reel
+        </button>
+</div>
+</div>
+</div>
+<!-- SHARED FOOTER -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest text-primary dark:text-primary docked full-width bottom border-t border-outline-variant/10 dark:border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin py-8 gap-4 max-w-7xl mx-auto text-on-surface-variant dark:text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span class="text-body-md font-headline-md lowercase tracking-tight text-primary dark:text-primary font-syne font-bold">
+          trendo.
+        </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">
+          trendo. archival cinema curation
+        </span>
+</div>
+<nav class="flex flex-wrap justify-center gap-6 text-body-sm font-body-sm">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Archive</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">TMDB Signals</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Journal</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Privacy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150" href="#">Colophon</a>
+</nav>
+</div>
+</footer>
+<!-- SCRIPT: macOS DOCK MAGNIFICATION PHYSICS & MODAL -->
+<script>
+    const dockContainer = document.getElementById('dock-stream');
+    const cards = Array.from(document.querySelectorAll('.dock-card'));
+
+    // Physics parameters for smooth dock curvature
+    const MAX_SCALE = 1.075;
+    const NEIGHBOR_SCALE = 1.03;
+    const RADIUS_PX = 180; // Proximity influence boundary
+
+    dockContainer.addEventListener('mousemove', (e) => {
+      const cursorY = e.clientY;
+
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterY = rect.top + rect.height / 2;
+        const distance = Math.abs(cursorY - cardCenterY);
+
+        if (distance < RADIUS_PX) {
+          // Cosine interpolation for organic Apple Dock feel
+          const normalized = (RADIUS_PX - distance) / RADIUS_PX;
+          const scale = 1 + (MAX_SCALE - 1) * Math.sin((normalized * Math.PI) / 2);
+          card.style.transform = `scale(${scale.toFixed(4)})`;
+          card.style.zIndex = '20';
+          card.style.borderColor = 'rgba(255, 255, 255, 0.35)';
+        } else {
+          card.style.transform = 'scale(1)';
+          card.style.zIndex = '1';
+          card.style.borderColor = '';
+        }
+      });
+    });
+
+    dockContainer.addEventListener('mouseleave', () => {
+      cards.forEach(card => {
+        card.style.transform = 'scale(1)';
+        card.style.zIndex = '1';
+        card.style.borderColor = '';
+      });
+    });
+
+    // Monograph Modal Data Dictionary
+    const showData = {
+      shogun: {
+        rank: "TELEMETRY #01",
+        title: "Shōgun",
+        meta: "2024 • 10 Episodes • FX / Hulu • Creators: Rachel Kondo, Justin Marks",
+        desc: "Set in Japan in the year 1600, Lord Yoshii Toranaga is fighting for his life as his enemies on the Council of Regents unite against him. When a mysterious European ship is found marooned in a nearby fishing village, its English pilot brings secrets that could help Toranaga tip the scales of power.",
+        score: "85",
+        pop: "984.2"
+      },
+      thebear: {
+        rank: "TELEMETRY #02",
+        title: "The Bear",
+        meta: "2023–2024 • 28 Episodes • FX / Hulu • Creator: Christopher Storer",
+        desc: "Carmen Berzatto, a young fine-dining chef, comes home to Chicago to run his family Italian beef sandwich shop after a heartbreaking death. A world away from what he's used to, Carmy must balance the soul-crushing realities of small business ownership, his headstrong kitchen staff and strained family relationships.",
+        score: "88",
+        pop: "895.1"
+      },
+      severance: {
+        rank: "TELEMETRY #03",
+        title: "Severance",
+        meta: "2022–2025 • Apple TV+ • Creator: Dan Erickson • Dir: Ben Stiller",
+        desc: "Mark Scout leads a team at Lumon Industries, whose employees have undergone a severance procedure, which surgically divides their memories between their work and personal lives. This daring experiment in work-life balance is called into question as Mark finds himself at the center of an unraveling mystery.",
+        score: "83",
+        pop: "812.4"
+      },
+      succession: {
+        rank: "TELEMETRY #04",
+        title: "Succession",
+        meta: "2018–2023 • 39 Episodes • HBO / Max • Creator: Jesse Armstrong",
+        desc: "The Roy family is known for controlling the biggest media and entertainment company in the world. However, their world changes when their aging father steps down from the company, catalyzing cutthroat succession maneuvers.",
+        score: "92",
+        pop: "760.3"
+      },
+      hotd: {
+        rank: "TELEMETRY #05",
+        title: "House of the Dragon",
+        meta: "2022–2024 • HBO / Max • Creators: Ryan J. Condal, George R.R. Martin",
+        desc: "Prequel series to Game of Thrones chronicling the beginning of the end of House Targaryen and the events leading up to the Targaryen civil war, known as the Dance of the Dragons.",
+        score: "79",
+        pop: "720.8"
+      },
+      truedetective: {
+        rank: "TELEMETRY #06",
+        title: "True Detective: Night Country",
+        meta: "2024 • 6 Episodes • HBO • Showrunner: Issa López",
+        desc: "When the long winter night falls in Ennis, Alaska, the eight men who operate the Tsalal Arctic Research Station vanish without a trace. Detectives Liz Danvers and Evangeline Navarro must dig into their haunted pasts to solve the inexplicable tragedy.",
+        score: "81",
+        pop: "640.2"
+      },
+      fargo: {
+        rank: "TELEMETRY #07",
+        title: "Fargo (Season 5)",
+        meta: "2023–2024 • 10 Episodes • FX • Creator: Noah Hawley",
+        desc: "After an unexpected series of events lands Dorothy 'Dot' Lyon in hot water with the authorities, this seemingly typical Midwestern housewife is suddenly plunged back into a life she thought she had left behind in North Dakota.",
+        score: "80",
+        pop: "580.1"
+      },
+      tlou: {
+        rank: "TELEMETRY #08",
+        title: "The Last of Us",
+        meta: "2023 • 9 Episodes • HBO • Creators: Craig Mazin, Neil Druckmann",
+        desc: "Twenty years after a fungal outbreak destroys society, Joel, a cynical smuggler, is hired to escort Ellie, an immune teenage girl, through infected quarantine zones in a bleak journey across America.",
+        score: "84",
+        pop: "540.9"
+      },
+      fallout: {
+        rank: "TELEMETRY #09",
+        title: "Fallout",
+        meta: "2024 • 8 Episodes • Prime Video • Creators: Geneva Robertson-Dworet, Graham Wagner",
+        desc: "In a future, post-apocalyptic Los Angeles brought about by nuclear decimation, citizens must live in underground bunkers to protect themselves from radiation, mutants and bandits. Lucy embarks into the wasteland above.",
+        score: "73",
+        pop: "510.6"
+      },
+      ripley: {
+        rank: "TELEMETRY #10",
+        title: "Ripley",
+        meta: "2024 • 8 Episodes • Netflix • Director: Steven Zaillian",
+        desc: "Tom Ripley, a grifter scraping by in early 1960s New York, is hired by a wealthy man to travel to Italy to try to convince his vagabond son to return home. Tom's acceptance of the job is the first step into a complex life of deceit.",
+        score: "75",
+        pop: "470.3"
+      }
+    };
+
+    const modal = document.getElementById('monograph-modal');
+    const modalCard = document.getElementById('modal-card');
+
+    function openModal(key) {
+      const data = showData[key] || showData.shogun;
+      document.getElementById('modal-rank').textContent = data.rank;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-meta').textContent = data.meta;
+      document.getElementById('modal-desc').textContent = data.desc;
+      document.getElementById('modal-score').textContent = data.score;
+      document.getElementById('modal-pop').textContent = data.pop;
+
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalCard.classList.remove('scale-95');
+      modalCard.classList.add('scale-100');
+    }
+
+    function closeModal() {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-95');
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body></html>
