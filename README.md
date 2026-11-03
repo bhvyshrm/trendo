@@ -1,158 +1,110 @@
-# 🎬 Trendo
+# 🎬 trendo. — Premium Cinema & TV Discovery Platform
 
-### What's trending. What's worth watching.
+> Live Telemetry Stream • Editorial Cinema Index
 
-Trendo is a modern cinema discovery platform designed to help you explore trending movies and TV shows through a beautiful, minimal, and immersive experience.
-
-Discover what's popular, explore new titles, and find your next watch.
+**trendo.** is a production-quality cinema and television discovery platform built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS**. It combines the editorial elegance of prestige film journals with the fluid, tactile polish of modern desktop operating systems, powered by official **The Movie Database (TMDB v3)** telemetry.
 
 ---
 
-## ✦ About the Project
+## Key Features
 
-Trendo aims to bring movie and television discovery into one elegant platform.
+1. **Two Primary Discovery Categories**:
+   - **Movies**: Daily Top 50 trending movies, box office telemetry, festival curations, and critics consensus.
+   - **TV Shows**: Daily Top 50 trending series, premiere surges, and Emmy contenders.
+2. **macOS Dock Magnification Physics**:
+   - Proximity-based card magnification on cursor hover using organic cosine interpolation physics without disruptive layout shifts.
+   - Top 3 Podium Aura Badges (#01 Gold Aura with animated radar glow, #02 Silver Medal, #03 Bronze Podium).
+3. **Dual Discovery Views**:
+   - **Vertical Dock View** (`view_agenda`): Editorial vertical ranking with narrative synopsis and telemetry stats.
+   - **Compact Grid View** (`grid_view`): High-density golden ratio (2:3) poster gallery.
+4. **Dedicated Details & Monograph Pages**:
+   - Movie details (`/movie/:id`) and TV series details (`/tv/:id`).
+   - Cinematic full-bleed backdrop viewports with obsidian scrims.
+   - Dedicated **"Why it's trending"** telemetry section with verifiable TMDB signals (daily popularity index, vote average, vote count, release velocity).
+   - Principal cast photo cards, directorial credits, production companies/networks, and recommended dispatches.
+   - Embedded official YouTube trailers.
+5. **Instant Search & Command Palette (`⌘K`)**:
+   - Global search across movies and series with instant debounced TMDB querying.
+6. **Tune Stream Filters & Sorting**:
+   - Slide-over filter drawer with genre chips, release epoch, minimum TMDB rating slider, language selector, and 5 sorting modes (Rank, Popularity, Rating, Release Date, Alphabetical).
+7. **Curated Reel (Watchlist)**:
+   - Save noteworthy films and series directly to local storage with one-click dispatch access.
+8. **Resilient Offline / Demo Mode**:
+   - Includes a rich, curated fallback telemetry dataset if an API key is not immediately configured or network is unavailable, ensuring the application is always fully functional out of the box.
 
-Instead of overwhelming users with unnecessary features, Trendo focuses on what matters: discovering trending entertainment, exploring detailed information, and navigating effortlessly.
+---
 
-Built with a focus on **design, performance, and simplicity**.
+## 🎨 Design System Tokens
+- **Background**: `#070707` (Pitch Obsidian)
+- **Surfaces**: `#0e0e0e`, `#131313`, `#151517`, `#1c1b1b`, `#201f1f`, `#2a2a2a`
+- **Text High Emphasis**: `#ffffff` / `#f5f5f5`
+- **Text Muted**: `#8e9192` / `#707070`
+- **Accent Highlight**: `#34d399` (Emerald 400 Telemetry Pulse), `#fbbf24` (Amber 400 Gold Aura)
+- **Typography**: `Hanken Grotesk` (Editorial display & body), `Space Mono` (Telemetry slates & badges), `Syne` (Brand wordmark)
 
-## ✨ Planned Features
-
-- 🎬 **Trending Movies** — Discover today's trending movies.
-- 📺 **Trending TV Shows** — Explore popular television content.
-- 🔎 **Smart Search** — Find movies and shows effortlessly.
-- 🎭 **Advanced Filters** — Filter by genre, country, language, rating, and more.
-- 📊 **Trending Insights** — Explore cinema trends and popularity.
-- 🎞️ **Detailed Pages** — Explore information, ratings, cast, and recommendations.
-- 🌙 **Cinematic UI** — A clean, immersive, dark-first interface.
-- 📱 **Responsive Design** — Optimized for mobile, tablet, and desktop.
-
-## 🛠️ Tech Stack
-
-The planned technology stack:
-
-| Technology | Purpose |
-|---|---|
-| Next.js | React framework |
-| TypeScript | Type safety |
-| Tailwind CSS | Styling |
-| TMDB API | Movie and TV data |
-| Vercel | Deployment |
-
-## 🎨 Design Philosophy
-
-Trendo is built around a simple idea:
-
-> Entertainment discovery should feel as good as the entertainment itself.
-
-The design focuses on:
-
-- Minimal and cinematic aesthetics
-- Thoughtful typography
-- Beautiful movie posters
-- Smooth interactions
-- Clean navigation
-- Mobile-first usability
+---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 1. Prerequisites
+- **Node.js** (v18 or higher; tested on v24)
+- **npm** (v9 or higher)
 
-- Node.js
-- npm
-- A TMDB API key
-
-### Installation
-
-Clone the repository:
-
+### 2. Installation
 ```bash
-git clone https://github.com/YOUR_USERNAME/Trendo.git
-```
+# Clone the repository and navigate into the workspace
+git clone https://github.com/bhvyshrm/trendo.git
+cd trendo
 
-Navigate to the project:
-
-```bash
-cd Trendo
-```
-
-Install dependencies:
-
-```bash
+# Install project dependencies
 npm install
 ```
 
-### Environment Variables
+### 3. TMDB API Key Configuration (Optional for Live Telemetry)
+The website is fully functional out of the box with the curated fallback dataset. To stream live real-time TMDB data:
 
-Create a `.env.local` file in the project root:
+1. Obtain a free v3 API key from [The Movie Database](https://www.themoviedb.org/settings/api).
+2. Create a `.env` file in the project root:
+   ```env
+   VITE_TMDB_API_KEY=your_actual_tmdb_api_key_here
+   ```
+3. Alternatively, click the **key icon** in the top navigation bar of the running application to enter or test your TMDB API key directly in the UI.
 
-```env
-TMDB_API_KEY=your_tmdb_api_key
-```
-
-Replace the placeholder with your actual TMDB API key.
-
-**Never commit your API key to GitHub.**
-
-### Development
-
-Start the development server:
-
+### 4. Running the Development Server
 ```bash
 npm run dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-*Setup instructions may need adjustment based on the final project configuration.*
+### 5. Building for Production
+```bash
+npm run build
+```
+The compiled, type-checked, and minified production assets will be generated in `dist/`.
 
-## 🗺️ Roadmap
+### 6. Previewing Production Build
+```bash
+npm run preview
+```
 
-- [ ] Establish the visual identity
-- [ ] Build the responsive homepage
-- [ ] Integrate TMDB API
-- [ ] Implement trending movies
-- [ ] Implement trending TV shows
-- [ ] Build movie and TV details pages
-- [ ] Add search and filtering
-- [ ] Optimize mobile experience
-- [ ] Improve performance and accessibility
-- [ ] Deploy the website
-
-## 🔮 Future Possibilities
-
-- Google Trends integration
-- Search-interest insights
-- Personalized recommendations
-- Watchlists and favorites
-- Advanced trending analytics
+---
 
 ## 📡 Data & Attribution
 
-Movie and television information is intended to be provided by [TMDB](https://www.themoviedb.org/).
+Movie and television telemetry is provided by [The Movie Database (TMDB)](https://www.themoviedb.org/).
+This product uses the TMDB API but is not certified or endorsed by TMDB.
 
-This product uses the TMDB API but is not endorsed or certified by TMDB.
-
-Review TMDB's current API terms and attribution requirements before public release.
-
-## 🤝 Contributing
-
-Suggestions, feedback, and contributions are welcome.
-
-If you have ideas that could improve Trendo, feel free to open an issue or submit a pull request.
+---
 
 ## 📄 License
-
-License: To be determined.
+MIT
 
 ---
 
 <div align="center">
 
-**Trendo**
+**trendo.**
 
-*Discover what's trending.*
-
-Made with curiosity and a love for cinema. 🎬
+*Cinema, in motion.*
 
 </div>
